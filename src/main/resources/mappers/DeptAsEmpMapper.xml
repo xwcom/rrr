@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--接口代理-->
+<mapper namespace="dao.DeptAsEmpMapper">
+
+
+    <!--<select id="queryDeptAsEmps" parameterType="int" resultType="dept">
+        select * from t_dept where did=#{did}
+    </select>-->
+
+    <resultMap id="deptAsEmp" type="model.Dept">
+        <id property="did" column="did"></id>
+        <result property="dname" column="dname"></result>
+        <!--配置集合-->
+        <collection property="emps" ofType="model.Emp">
+            <!--配置Emp-->
+            <id property="eid" column="eid"></id>
+            <result property="ename" column="ename"></result>
+        </collection>
+    </resultMap>
+
+    <select id="queryDeptAsEmps" parameterType="int" resultMap="deptAsEmp">
+        select * from t_dept d, t_emp e where d.did=#{did} and d.did=e.did
+    </select>
+
+
+
+    <resultMap id="empAsDept" type="model.Emp">
+        <id property="eid" column="eid"></id>
+        <result property="ename" column="ename"></result>
+        <!--配置对象-->
+        <association property="dept" javaType="model.Dept">
+            <id property="did" column="did"></id>
+            <result property="dname" column="dname"></result>
+        </association>
+    </resultMap>
+
+    <select id="queryEmpsAsDept" parameterType="Integer" resultMap="empAsDept">
+        select * from t_emp e, t_dept d
+        where e.eid=#{eid} and e.did=d.did
+    </select>
+    
+</mapper>

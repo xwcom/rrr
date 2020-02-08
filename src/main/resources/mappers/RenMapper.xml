@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--该映射文件是Book类在Dao层的实现类-->
+
+<!--接口代理-->
+<mapper namespace="dao.RenDao">
+    <!--编写Book类的CRUD-->
+
+    <!--id指向接口中的方法名-->
+    <insert id="addRen" parameterType="model.Ren">
+        insert into ren(name,age,sex)
+        values(#{name},#{age},#{sex})
+    </insert>
+    
+    
+    <select id="queryRen" resultType="model.Ren">
+      select * from ren
+    </select>
+
+
+    <delete id="deleteRen">
+            delete from ren where id=#{id}
+        </delete>
+
+
+    <update id="updateRen" parameterType="model.Ren">
+            update ren set name=#{name},age=#{age},sex=#{sex}
+            where  userid=#{userid}
+        </update>
+    
+</mapper>
